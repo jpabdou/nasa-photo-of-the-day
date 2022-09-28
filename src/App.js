@@ -11,8 +11,9 @@ function App() {
   }
   const lastWeek=(getLastWeeksDate())
   const currentDate = new Date().toJSON().slice(0,10);
-  const [images, setImages] = useState({});
+  const [images, setImages] = useState([]);
   const [weekStart, setWeekStart] = useState(lastWeek);
+  const [weekEnd, setWeekEnd] = useState(currentDate);
 
   const queryDate = (dateStringWithSlash) => {
     return dateStringWithSlash.replace("/","-")
@@ -22,17 +23,19 @@ function App() {
     
     setWeekStart(e.target.value);
     let dateInput= e.target.value+"T00:00:00"
-    console.log(dateInput)
     const input = ((new Date(dateInput)))
-    console.log(new Date(input.getFullYear(),input.getMonth(),input.getDate()+7).toJSON().slice(0,10))
+    setWeekStart(new Date(input.getFullYear(),input.getMonth(),input.getDate()).toJSON().slice(0,10))
+    setWeekEnd(new Date(input.getFullYear(),input.getMonth(),input.getDate()+7).toJSON().slice(0,10))
   };
 
-  const imageGather = () =>{
-    axios.get(`https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&start_date=${queryDate(weekStart)}`)
-      .then(result => console.log(result.data))
+  const imageGather = (start,end) =>{
+    const query =`https://api.nasa.gov/planetary/apod?api_key=kgTQPgD3BKFdIzfwxwLmG1DShWwgo6rHMBFXZdeH&start_date=${start}&end_date=${end}`
+    console.log(query)
+    axios.get(query)
+      .then(result => setImages(result.data))
       .catch(err=>console.log(`Error: ${err}`))
   }
-  // useEffect(()=>{imageGather()},[weekStart])
+  useEffect(()=>{imageGather(weekStart,weekEnd)},[weekStart, weekEnd])
   
   return (
     <div className="App">
@@ -40,13 +43,13 @@ function App() {
       <div>
         <label>Start date:</label>
 
-        <input onChange={onChangeDate} type="date" id="start" name="week-start" />
+        <input onChange={(event)=>onChangeDate(event)} type="date" id="start" name="week-start" />
       </div>
-
-      <p>
-        Read through the instructions in the README.md file to build your NASA
-        app! Have fun <span role="img" aria-label='go!'>🚀</span>!
-      </p>
+      {images.forEach(res=>{
+        <div>
+          <img src={res.url}/>
+        </div>
+      })}
     </div>
   );
 }
