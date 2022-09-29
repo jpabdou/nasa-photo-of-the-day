@@ -1,8 +1,5 @@
 .App {
   text-align: center;
-  height: 100%;
-  width: 100%;
-  background-image: url("https://wallup.net/wp-content/uploads/2017/11/17/292297-stars.jpg");
 }
 
 .App-logo {
@@ -13,22 +10,6 @@
 img {
   height:400px;
   object-fit: cover;
-  border: 2px solid lightgoldenrodyellow;
-}
-
-input {
-  background-color: black;
-}
-
-.Spaaace {
-
-  display: flex;
-  align-content: space-evenly;
-  flex-flow: column wrap;
-}
-
-* {
-  color: lightsalmon;
 }
 
 @media (prefers-reduced-motion: no-preference) {
