@@ -7,10 +7,6 @@
   pointer-events: none;
 }
 
-img {
-  height:400px;
-  object-fit: cover;
-}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {

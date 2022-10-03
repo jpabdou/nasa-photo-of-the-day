@@ -2,6 +2,21 @@ import React, {useState,useEffect} from "react";
 import "./App.css";
 import axios from "axios";
 import Space from "./Space";
+import styled from "styled-components";
+
+const SpaceCalender = styled.input`
+  background-color: black;
+  font-size: 1.5rem;
+`
+const SpaceLabel = styled.label`
+  font-size:1.5rem
+`
+const Spacer = styled.div`
+  margin:0px 0px 10px 0px;
+  height: 1rem;
+  width: 100%
+`
+
 
 function App() {
   function getLastWeeksDate() {
@@ -35,16 +50,16 @@ function App() {
   useEffect(()=>{imageGather(weekStart,weekEnd)},[weekStart, weekEnd])
   return (
     <div className="App">
+      <Spacer></Spacer>
       <h1>A look at space each day of the week courtesy of NASA!</h1>
       <div>
-        <label>Start date:</label>
-
-        <input onChange={(event)=>onChangeDate(event)} type="date" id="start" name="week-start" />
+        <SpaceLabel>Start date of the week you want to look at: </SpaceLabel>
+        <SpaceCalender onChange={(event)=>onChangeDate(event)} type="date" />
       </div>
       <div className="Spaaace">
       {images.map((image,idx)=>
         <div key={idx}>
-          <Space title={image.title} url={image.hdurl ? image.hdurl : image.url} media_type={image.media_type} />
+          <Space title={image.title} date={image.date} url={image.hdurl ? image.hdurl : image.url} media_type={image.media_type} />
         </div>
       )}
       </div>
